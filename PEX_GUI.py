@@ -27,18 +27,18 @@ class MyApp(QtWidgets.QWidget):
 
         # connect  the writable parameters from the design.py
         self.ui.lineEdit_17.setText \
-            ("/home/teip/Desktop/0_masterarbeit/data/PEX_7Tesla_Buch/2022.01.26_Franksloop_fast_reallyfast/RAW")
+            ("/home/")
         self.ui.lineEdit_12.setText("6")
         self.ui.lineEdit_16.setText("0")
-        self.ui.lineEdit_14.setText("0.2")
+        self.ui.lineEdit_14.setText("0.15")
         self.ui.lineEdit_13.setText("10")
         self.ui.lineEdit_2.setText("300")
         self.ui.lineEdit_3.setText("4")
-        self.ui.lineEdit_15.setText("0.6")
+        self.ui.lineEdit_15.setText("0.9")
         self.ui.lineEdit.setText("10")
         self.ui.lineEdit_11.setText("800")
         self.ui.lineEdit_10.setText("17")
-        self.ui.lineEdit_18.setText("/home/teip/Desktop/0_masterarbeit/data/PEX_7Tesla_Buch/2022.06.23_1xHBC+2xHBC/1chanel/meas_MID153_PEX_B1_sd_1ch_fast_tBP_HBC_M8_2mmStyro_L_loop_phaseRL_0m__FID22552_Results/0_File.pickled")
+        self.ui.lineEdit_18.setText("home/0_File.pickled")
 
         self.ui.label_3.setToolTip("Path to the PEX(*.dat) file/folder")
         self.ui.label_2.setToolTip("T1 time in s for the Phantom. For different media use average  ")
