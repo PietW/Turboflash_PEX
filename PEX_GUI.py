@@ -51,8 +51,8 @@ class MyApp(QtWidgets.QWidget):
         self.ui.label_9.setToolTip("Minimum Voltage threshold, choose at least lowest Voltage level ")
         self.ui.label_8.setToolTip("Maximum Voltage threshold, choose at least double highest Voltage level ")
         self.ui.label_13.setToolTip("Some Scanner have a limit of how many Voltages can be measured after each other. B.U.F.Fs 7T scanner limit is 17 ")
-        self.ui.toolButton_2.clicked.connect(self.getfile)
-        self.ui.toolButton.clicked.connect(self.getfile2)
+        self.ui.toolButton.clicked.connect(self.getfile)
+        self.ui.toolButton_2.clicked.connect(self.getfile2)
 
 
         # connect Push buttons from design.py
@@ -77,18 +77,18 @@ class MyApp(QtWidgets.QWidget):
         self.setGeometry(100, 130, 1300, 1000)
 
 
-    def getfile(self):# get files with .dat and write them in the textEdit
+    def getfile2(self):# get files with .dat and write them in the textEdit
+        dlg = qt.QtWidgets.QFileDialog(filter="pickled Files (*.pickled)")
+        dlg.show()
+
+        if dlg.exec():
+            self.ui.lineEdit_18.setText(str(dlg.selectedFiles()[0]))
+    def getfile(self):# get files with *.pickled and write them in the textEdit
         dlg = qt.QtWidgets.QFileDialog(filter="Data Files (*.dat")
         dlg.show()
 
         if dlg.exec():
-            self.ui.lineEdit_18.setText(str(dlg.selectedFiles()[0]))
-    def getfile2(self):# get files with *.pickled and write them in the textEdit
-        dlg = qt.QtWidgets.QFileDialog(filter="Data Files (*.pickled)")
-        dlg.show()
-
-        if dlg.exec():
-            self.ui.lineEdit_18.setText(str(dlg.selectedFiles()[0]))
+            self.ui.lineEdit_17.setText(str(dlg.selectedFiles()[0]))
 
     def message(self, s): # print message
         self.ui.plainTextEdit.appendPlainText(s)
@@ -114,11 +114,19 @@ class MyApp(QtWidgets.QWidget):
         self.B1_plus = np.array(np.abs(data[4]))
 
         if self.B1_plus.shape[0] != 1:
+            self.mask =np.transpose(data[3],(2,0,1))
+            self.mask_parts=np.transpose(data[3],(2,0,1))
 
-            self.B1_plus = np.sum(np.abs(self.B1_plus), axis=0)
+            self.B1_plus_parts= self.B1_plus* self.mask
+            self.B1_plus = np.sum(np.abs(self.B1_plus*  self.mask), axis=0)
+            self.mask = np.sum(np.abs(self.mask), axis=0)
+            self.mask[self.mask > 0] = 1
+            print("TX",self.B1_plus.shape[0])
+
         else:
             self.B1_plus = np.abs(self.B1_plus)[0]
-
+            self.mask = data[3]
+            self.B1_plus_parts = self.B1_plus * self.mask[:,:,0]
 
         # make figure for B1+ map
 
@@ -131,7 +139,8 @@ class MyApp(QtWidgets.QWidget):
 
         # make figure for mask chennels plots
         sc3 = matplofigure(self, width=4, height=3, dpi=80)
-        sc3.axes.imshow(data[3])
+        sc3.axes.imshow(self.mask)
+
         sc3.axes.set_title("Mask of the Image")
 
 
@@ -148,11 +157,24 @@ class MyApp(QtWidgets.QWidget):
             #Model/data fitting plots
 
 
-            Model = np.array(data[8])[:,  int(event.ydata), int(event.xdata)]
-            Data_fit = np.array(data[6])[:, int(event.ydata), int(event.xdata)]
-            sc2.axes.plot(Model[0], label="Modelfit")  # [y,x]y^|->x
-            sc2.axes.plot(Data_fit[0], label="Data ")
-            sc2.axes.set_title(r"Model fit of the data")
+            self.Model = np.array(data[8])
+            self.Data_fit = np.array(data[6])
+
+
+            # plotting only the model datta for the highest B1+ map point
+            if self.Model.shape[0]!=1:
+
+                index_array=np.argmax(self.B1_plus_parts,axis=0)
+                index_array=np.expand_dims(index_array, axis=2)
+
+                self.Data_fit=np.take_along_axis(self.Data_fit, np.expand_dims(index_array, axis=0), axis=0)
+                self.Model = np.take_along_axis(self.Model, np.expand_dims(index_array, axis=0), axis=0)
+
+
+
+            sc2.axes.plot(self.Model[0, int(event.ydata), int(event.xdata)], label="Modelfit")
+            sc2.axes.plot(self.Data_fit[0, int(event.ydata), int(event.xdata)], label="Data ")
+            sc2.axes.set_title(r"Model fit of the data",x=3)
             sc2.fig.legend()
             sc2.axes.set_ylabel(r'$\frac{S}{S_{0}} $',rotation=0)
 

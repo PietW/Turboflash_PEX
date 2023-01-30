@@ -83,18 +83,19 @@ def PEX_RECON(pathfolder,n_jobs,loss_in_db,mask_thresh,stopV ,startV,stepV,T1,Vo
         max_Voltage_steps=17 # the PEX sequenc has a limitation that only 16 Voltage steps will be sequenced every thing after the 16 step will be 0, therfore do max 17 steps and the 17 step is 0 V
 
     # =============================================================================
-    #Find all .nii files in the PathFolder
-    if type(pathfolder)==list:
-        pathfolder=pathfolder[0]
-    files_list = [f for f in listdir(pathfolder) if
+    #Find all .dat files in the PathFolder
+    if pathfolder.is_dir():
+        files_list = [f for f in listdir(pathfolder) if
                   isfile(join(pathfolder, f)) and splitext(join(pathfolder, f))[-1] == ".dat"]
-    if pathfolder.is_file() :
-        files_list =[pathfolder[0]]
+    elif pathfolder.is_file() :
+        files_list =[join(pathfolder)]
+    else:
+        print(f"{pathfolder} is not a directory or a file")
     print("List of .dat Files:",files_list)
 
     # =============================================================================
     #Loop over every file in the list and reconstruct the Files
-    # !!!!warning Files that have been already Reconstructed will be overwritten !!!
+
 
 
     for file in files_list:
