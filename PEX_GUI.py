@@ -27,18 +27,19 @@ class MyApp(QtWidgets.QWidget):
 
         # connect  the writable parameters from the design.py
         self.ui.lineEdit_17.setText \
-            ("/home/")
+            ("/home/teip/Desktop/0_masterarbeit/data/PEX_7Tesla_Buch/2022.01.26_Franksloop_fast_reallyfast/RAW")
         self.ui.lineEdit_12.setText("6")
         self.ui.lineEdit_16.setText("0")
-        self.ui.lineEdit_14.setText("0.15")
+        self.ui.lineEdit_14.setText("0.2")
         self.ui.lineEdit_13.setText("10")
         self.ui.lineEdit_2.setText("300")
         self.ui.lineEdit_3.setText("4")
-        self.ui.lineEdit_15.setText("0.9")
+        self.ui.lineEdit_15.setText("0.6")
         self.ui.lineEdit.setText("10")
         self.ui.lineEdit_11.setText("800")
         self.ui.lineEdit_10.setText("17")
-        self.ui.lineEdit_18.setText("home/0_File.pickled")
+        self.ui.lineEdit_18.setText("/home/teip/Desktop/0_masterarbeit/data/PEX_7Tesla_Buch/2022.06.23_1xHBC+2xHBC/1chanel/meas_MID153_PEX_B1_sd_1ch_fast_tBP_HBC_M8_2mmStyro_L_loop_phaseRL_0m__FID22552_Results/0_File.pickled")
+        self.ui.lineEdit_19.setText("20")
 
         self.ui.label_3.setToolTip("Path to the PEX(*.dat) file/folder")
         self.ui.label_2.setToolTip("T1 time in s for the Phantom. For different media use average  ")
@@ -51,6 +52,8 @@ class MyApp(QtWidgets.QWidget):
         self.ui.label_9.setToolTip("Minimum Voltage threshold, choose at least lowest Voltage level ")
         self.ui.label_8.setToolTip("Maximum Voltage threshold, choose at least double highest Voltage level ")
         self.ui.label_13.setToolTip("Some Scanner have a limit of how many Voltages can be measured after each other. B.U.F.Fs 7T scanner limit is 17 ")
+        self.ui.label_17.setToolTip(
+            "vmax value for a plot in matplotlib ")
         self.ui.toolButton.clicked.connect(self.getfile)
         self.ui.toolButton_2.clicked.connect(self.getfile2)
 
@@ -84,7 +87,7 @@ class MyApp(QtWidgets.QWidget):
         if dlg.exec():
             self.ui.lineEdit_18.setText(str(dlg.selectedFiles()[0]))
     def getfile(self):# get files with *.pickled and write them in the textEdit
-        dlg = qt.QtWidgets.QFileDialog(filter="Data Files (*.dat")
+        dlg = qt.QtWidgets.QFileDialog(filter="Data Files (*.dat)")
         dlg.show()
 
         if dlg.exec():
@@ -131,7 +134,9 @@ class MyApp(QtWidgets.QWidget):
         # make figure for B1+ map
 
         sc= matplofigure(self, width=4, height=4, dpi=80)
-        sc.axes.imshow(self.B1_plus ,vmax=30, cmap='inferno')
+        fig2=sc.axes.imshow(self.B1_plus ,vmax=float(self.ui.lineEdit_19.text()), cmap='inferno')
+        cbar=sc.fig.colorbar(fig2)
+        cbar.set_label(r'$\frac{μT}{\sqrt{kW}} $', rotation=0)
         sc.axes.set_title("B1+ map")
 
         # make figure for model/data fitting plots
@@ -173,8 +178,8 @@ class MyApp(QtWidgets.QWidget):
 
 
             sc2.axes.plot(self.Model[0, int(event.ydata), int(event.xdata)], label="Modelfit")
-            sc2.axes.plot(self.Data_fit[0, int(event.ydata), int(event.xdata)], label="Data ")
-            sc2.axes.set_title(r"Model fit of the data",x=3)
+            sc2.axes.plot(self.Data_fit[0, int(event.ydata), int(event.xdata)],'r+', label="Data")
+            sc2.axes.set_title(r"Model fit of the data",)
             sc2.fig.legend()
             sc2.axes.set_ylabel(r'$\frac{S}{S_{0}} $',rotation=0)
 

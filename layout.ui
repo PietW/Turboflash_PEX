@@ -439,14 +439,37 @@
   <widget class="QPushButton" name="pushButton_3">
    <property name="geometry">
     <rect>
-     <x>288</x>
-     <y>70</y>
-     <width>101</width>
+     <x>470</x>
+     <y>110</y>
+     <width>81</width>
      <height>25</height>
     </rect>
    </property>
    <property name="text">
     <string>kill Process</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit_19">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>160</y>
+     <width>31</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_17">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>160</y>
+     <width>111</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Plot max Value</string>
    </property>
   </widget>
  </widget>
