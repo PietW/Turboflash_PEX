@@ -157,7 +157,7 @@ class MyApp(QtWidgets.QWidget):
 
 
             sc2.axes.cla() # clear figure
-            self.ui.label.setText("X-axis:  "+str(int(event.xdata))+ " Y-axis:"+str(int(event.ydata)) ) # sets label widget with coordinates
+
 
             #Model/data fitting plots
 
@@ -184,7 +184,9 @@ class MyApp(QtWidgets.QWidget):
             sc2.axes.set_ylabel(r'$\frac{S}{S_{0}} $',rotation=0)
 
             sc2.draw() # update figure
-
+            sc3.draw()
+            self.ui.label.setText("X-axis:  " + str(int(event.xdata)) + " Y-axis:" + str(
+                int(event.ydata)))  # sets label widget with coordinates
 
 
         sc.mpl_connect("button_press_event", click) # click event for the figure collector
