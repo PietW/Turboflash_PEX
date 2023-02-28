@@ -12,17 +12,17 @@ This repository contains Python code for implementing and runnning the Turboflas
 Usage
 --------
 
-Run the script Pex_gui.py: The user can load the exemplary data set. 
+Run the script PEX_GUI.py: The user can load the exemplary data set as parameter or choose an other data set. 
 
 Contents
 --------
 
 #####  scripts (run these):
-
-##### Routines called by the test scripts:
-
+tbd
+##### Routines called :
+tbd
 ##### Data files :
-
+tbd
     
 References
 ------------
@@ -33,5 +33,6 @@ Dependencies
 ------------
 These routines were tested under Python 3.8, 3.10 under Ubuntu 22., but should also run under newer versions.
 
+tbd
 
 Please cite appropriately.
