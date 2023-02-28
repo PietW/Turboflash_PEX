@@ -31,7 +31,7 @@ References
 
 Dependencies
 ------------
-These routines were tested under Python 3.8,3.10 under Ubuntu 22., but should also run under older versions.
+These routines were tested under Python 3.8, 3.10 under Ubuntu 22., but should also run under newer versions.
 
 
 Please cite appropriately.
