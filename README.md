@@ -2,7 +2,7 @@
 Turboflash PEX Reconstruction 
 
 
-This repository contains Python code for implementing and runnning the Turboflash PEX Reconstruction for the pre-extiation puls sequneze proposed in [1].  The data set contains a phantom measurement  
+This repository contains Python code for implementing and running the Turboflash PEX Reconstruction for the pre-excitation pulse sequence proposed in [1].  The data set contains a phantom measurement. 
 
 ##### Authors:
 - Piet Wagner                  (<pwteip@gmail.com>)
